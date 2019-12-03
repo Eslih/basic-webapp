@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  web:
+    build: ./web
+    command: uwsgi --ini app.ini
+    ports:
+      - 5000:5000
+    environment:
+      - PG_PASSWORD=student_password
+      - PG_USER=student_user
+      - PG_DATABASE=labo
+      - PG_PORT=5432
+      - PG_HOST=postgres
+    depends_on:
+      - postgres
+  postgres:
+    image: 'postgres:11.2-alpine'
+    environment:
+      - POSTGRES_PASSWORD=student_password
+      - POSTGRES_USER=student_user
+      - POSTGRES_DB=labo

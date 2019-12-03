@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Coolest Docker Example Ever!</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+<header>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <strong>Some cool Docker App</strong>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main role="main">
+
+    <section class="jumbotron text-center">
+        <div class="container">
+            {% block content %}{% endblock %}
+            <p>
+                {% if session['logged_in'] %}
+                    <a href="/logout" class="btn btn-danger">Logout</a>
+                {% else %}
+                    {% if request.path!="/login" and request.path!="/registration" %}
+                        <a href="/login" class="btn btn-primary">Login</a>
+                        <a href="/registration" class="btn btn-secondary">Register</a>
+                    {% endif %}
+                {% endif %}
+            </p>
+        </div>
+    </section>
+</main>
+</body>
+</html>
