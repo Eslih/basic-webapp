@@ -7,7 +7,7 @@ import socket
 def inject_hostname():
     return dict(hostname=socket.gethostname())
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def home():
     if not session.get('logged_in'):
         return render_template('index.html')
@@ -46,10 +46,16 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/prime', methods=['GET'])
-def prime():
+@app.route('/prime')
+@app.route('/prime/<int:lower>/<int:upper>')
+def prime(lower=0, upper=10000):
+    if lower > 5000:
+        return render_template('prime.html', error='Please don\'t overload me! Lower should be less than or equal to 5000.')
+    if upper > 10000:
+        return render_template('prime.html', error='You exaggerator! Upper should be less than or equal to 10000.')
+
     p=[]
-    for num in range(0, 10000):
+    for num in range(lower, upper+1):
        if num > 1:
            for i in range(2, num):
                if (num % i) == 0:
