@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+    <div class="alert alert-success" role="alert">
+       <strong>New!</strong> Check-out this cool <a href="/prime">prime generator</a>!
+    </div>
     {% if session['logged_in'] %}
         <h1 class="jumbotron-heading">Index - Logged in!</h1>
         <p class="lead text-muted">Some inspiring text. Give it another <a href="/logout">try</a>?</p>
@@ -15,5 +18,4 @@
             <a href="/registration" class="btn btn-success">Register!</a>
         {% endif %}
     {% endif %}
-
 {% endblock %}

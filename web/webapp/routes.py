@@ -1,7 +1,8 @@
-from flask import url_for, render_template, request, redirect, session
+from flask import url_for, render_template, request, redirect, session, g
 from flask import current_app as app
 from .models import db, User
 import socket
+import time
 
 @app.context_processor
 def inject_hostname():
@@ -51,8 +52,8 @@ def register():
 def prime(lower=0, upper=10000):
     if lower > 5000:
         return render_template('prime.html', error='Please don\'t overload me! Lower should be less than or equal to 5000.')
-    if upper > 10000:
-        return render_template('prime.html', error='You exaggerator! Upper should be less than or equal to 10000.')
+    if upper > 50000:
+        return render_template('prime.html', error='You exaggerator! Upper should be less than or equal to 50000.')
 
     p=[]
     for num in range(lower, upper+1):
@@ -65,8 +66,12 @@ def prime(lower=0, upper=10000):
 
     return render_template('prime.html', primes=p)
 
-
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
     return redirect(url_for('home'))
+
+@app.before_request
+def before_request():
+    g.request_start_time = time.time()
+    g.request_time = lambda: "%.5fs" % (time.time() - g.request_start_time)
