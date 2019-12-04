@@ -3,6 +3,7 @@ from flask import current_app as app
 from .models import db, User
 import socket
 import time
+import threading
 
 @app.context_processor
 def inject_hostname():
@@ -55,14 +56,15 @@ def prime(lower=0, upper=10000):
     if upper > 50000:
         return render_template('prime.html', error='You exaggerator! Upper should be less than or equal to 50000.')
 
-    p=[]
-    for num in range(lower, upper+1):
-       if num > 1:
-           for i in range(2, num):
-               if (num % i) == 0:
-                   break
-           else:
-               p.append(num)
+    p = []
+
+    for num in range(0, 50000 + 1):
+        if num > 1:
+            for i in range(2, num):
+                if (num % i) == 0:
+                    break
+            else:
+                p.append(num)
 
     return render_template('prime.html', primes=p)
 
