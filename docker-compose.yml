@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   web:
-    build: ./web
+    image: eslih/basic-wepapp:v1.0.0
     command: uwsgi --ini app.ini
     ports:
       - 5000:5000
