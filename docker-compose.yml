@@ -1,10 +1,10 @@
 version: '3.7'
 services:
   web:
-    image: eslih/basic-wepapp:v1.0.0
+    image: eslih/basic-webapp:v1.0.1
     command: uwsgi --ini app.ini
     ports:
-      - 5000:5000
+      - 5000:80
     environment:
       - PG_PASSWORD=student_password
       - PG_USER=student_user
