@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: postgres
-  name: postgres
+    io.kompose.service: webapp
+  name: webapp
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-     io.kompose.service: postgres
+      io.kompose.service: webapp
   strategy: {}
   template:
     metadata:
@@ -21,18 +21,26 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: postgres
+        io.kompose.service: webapp
     spec:
       containers:
-      - env:
-        - name: POSTGRES_DB
+      - args:
+        - uwsgi
+        - --ini
+        - app.ini
+        env:
+        - name: PG_DATABASE
           value: labo
-        - name: POSTGRES_PASSWORD
+        - name: PG_HOST
+          value: postgres
+        - name: PG_PASSWORD
           value: student_password
-        - name: POSTGRES_USER
+        - name: PG_PORT
+          value: "5432"
+        - name: PG_USER
           value: student_user
-        image: postgres:12.1-alpine
-        name: postgres
+        image: eslih/basic-webapp:v1.0.3
+        name: webapp
         resources: {}
       restartPolicy: Always
 status: {}

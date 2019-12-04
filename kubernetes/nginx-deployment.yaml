@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: web
-  name: web
+    io.kompose.service: nginx
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: web
+      io.kompose.service: nginx
   strategy: {}
   template:
     metadata:
@@ -21,26 +21,11 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: web
+        io.kompose.service: nginx
     spec:
       containers:
-      - args:
-        - uwsgi
-        - --ini
-        - app.ini
-        env:
-        - name: PG_DATABASE
-          value: labo
-        - name: PG_HOST
-          value: postgres
-        - name: PG_PASSWORD
-          value: student_password
-        - name: PG_PORT
-          value: "5432"
-        - name: PG_USER
-          value: student_user
-        image: eslih/basic-webapp:v1.0.1
-        name: web
+      - image: eslih/webapp-nginx:v1.0.1
+        name: nginx
         ports:
         - containerPort: 80
         resources: {}
