@@ -46,6 +46,20 @@ def register():
     return render_template('register.html')
 
 
+@app.route('/prime', methods=['GET'])
+def prime():
+    p=[]
+    for num in range(0, 10000):
+       if num > 1:
+           for i in range(2, num):
+               if (num % i) == 0:
+                   break
+           else:
+               p.append(num)
+
+    return render_template('prime.html', primes=p)
+
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False

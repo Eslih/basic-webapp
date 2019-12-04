@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="jumbotron-heading">Prime numbers!</h1>
+    <p>
+    {% for prime in primes %}
+        <span class="badge badge-light">{{ prime }}</span>
+    {% endfor %}
+    </p>
+{% endblock %}
