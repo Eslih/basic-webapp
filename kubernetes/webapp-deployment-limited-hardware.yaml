@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webapp
+  name: webapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      io.kompose.service: webapp
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: webapp
+    spec:
+      containers:
+      - args:
+        - uwsgi
+        - --ini
+        - app.ini
+        env:
+        - name: PG_DATABASE
+          value: labo
+        - name: PG_HOST
+          value: postgres
+        - name: PG_PASSWORD
+          value: student_password
+        - name: PG_PORT
+          value: "5432"
+        - name: PG_USER
+          value: student_user
+        image: eslih/basic-webapp:v1.0.3
+        name: webapp
+        resources: 
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m"
+      restartPolicy: Always
+status: {}
