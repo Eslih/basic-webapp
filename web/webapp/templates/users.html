@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="jumbotron-heading">Users overview</h1>
+    <p>Look at this beautiful table. It shows all the users their credentials.</p>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+           </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+               <th scope="row">{{ user.id }}</th>
+               <td>{{ user.username }}</td>
+               <td>{{ user.password }}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

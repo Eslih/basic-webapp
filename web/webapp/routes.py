@@ -17,6 +17,16 @@ def home():
         return render_template('index.html')
 
 
+@app.route('/users')
+def users():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    try:
+        data = User.query.all()
+        return render_template('users.html', users=data)
+    except Exception as e:
+        return "Some very good exception handling!" + str(e)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
