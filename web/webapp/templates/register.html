@@ -7,9 +7,9 @@
         <h1 class="jumbotron-heading">Register</h1>
         <p class="lead text-muted">You won't regret, coolest app ever!</p>
         {% if error %}
-        <div class="alert alert-danger" role="alert">
-            <strong>Username already taken!</strong> This app is so cool that the username is already taken!
-        </div>
+            <div class="alert alert-danger" role="alert">
+                <strong>Username already taken!</strong> This app is so cool that the username is already taken!
+            </div>
         {% endif %}
         <form action="/registration" method="POST">
             <div class="form-group">

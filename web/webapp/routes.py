@@ -5,9 +5,11 @@ import socket
 import time
 import threading
 
+
 @app.context_processor
 def inject_hostname():
     return dict(hostname=socket.gethostname())
+
 
 @app.route('/')
 def home():
@@ -22,9 +24,9 @@ def delete_users():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     try:
-        num_deleted = User.delete_users()
+        num_deleted = delete_users()
         session['logged_in'] = False
-        return render_template('users.html', message='All users (' + str(num_deleted)  + ') are deleted.')
+        return render_template('users.html', message='All users (' + str(num_deleted) + ') are deleted.')
     except Exception as e:
         return "Some very good exception handling!" + str(e)
 
@@ -83,7 +85,8 @@ def register():
 @app.route('/prime/<int:lower>/<int:upper>')
 def prime(lower=0, upper=10000):
     if lower > 5000:
-        return render_template('prime.html', error='Please don\'t overload me! Lower should be less than or equal to 5000.')
+        return render_template('prime.html',
+                               error='Please don\'t overload me! Lower should be less than or equal to 5000.')
     if upper > 50000:
         return render_template('prime.html', error='You exaggerator! Upper should be less than or equal to 50000.')
 
@@ -99,10 +102,12 @@ def prime(lower=0, upper=10000):
 
     return render_template('prime.html', primes=p)
 
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
     return redirect(url_for('home'))
+
 
 @app.before_request
 def before_request():

@@ -2,15 +2,15 @@
 {% block content %}
     <h1 class="jumbotron-heading">Prime numbers!</h1>
     {% if error %}
-    <div class="alert alert-danger" role="alert">
-        <strong>Woops!</strong> {{ error }}
-    </div>
+        <div class="alert alert-danger" role="alert">
+            <strong>Woops!</strong> {{ error }}
+        </div>
     {% else %}
-    <p>
-    {% for prime in primes %}
-        <span class="badge badge-light">{{ prime }}</span>
-    {% endfor %}
-    </p>
+        <p>
+            {% for prime in primes %}
+                <span class="badge badge-light">{{ prime }}</span>
+            {% endfor %}
+        </p>
     {% endif %}
     <p>
         Try it yourself! Example: <a href="/prime/100/1000">/100/1000</a>

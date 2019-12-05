@@ -43,13 +43,13 @@
                     {% endif %}
                 {% endif %}
             </p>
-           <p>
-               <span class="badge badge-info">Hostname: {{ hostname }} | Request time: {{ g.request_time() }}</span>
-               {% if session['logged_in'] %}
-               <a href="/users" class="badge badge-light">Users overview</a>
-               {% endif %}
-           </p>
-           <p class="font-weight-light">Version 1.0.7</p>
+            <p>
+                <span class="badge badge-info">Hostname: {{ hostname }} | Request time: {{ g.request_time() }}</span>
+                {% if session['logged_in'] %}
+                    <a href="/users" class="badge badge-light">Users overview</a>
+                {% endif %}
+            </p>
+            <p class="font-weight-light">Version 1.0.8</p>
         </div>
     </section>
 </main>

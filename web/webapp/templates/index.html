@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="alert alert-success" role="alert">
-       <strong>New!</strong> Check-out this cool <a href="/prime">prime generator</a>!
+        <strong>New!</strong> Check-out this cool <a href="/prime">prime generator</a>!
     </div>
     {% if session['logged_in'] %}
         <h1 class="jumbotron-heading">Index - Logged in!</h1>
@@ -12,7 +12,8 @@
 
         {% if data %}
             <div class="alert alert-danger" role="alert">
-                <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong> and password <strong>{{ data.password }}</strong>!
+                <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong> and
+                password <strong>{{ data.password }}</strong>!
             </div>
             <a href="/login" class="btn btn-warning">Try again!</a>
             <a href="/registration" class="btn btn-success">Register!</a>

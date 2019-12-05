@@ -30,7 +30,7 @@ spec:
           value: "5432"
         - name: PG_USER
           value: student_user
-        image: eslih/basic-webapp:v1.0.7
+        image: eslih/basic-webapp:v1.0.8
         name: webapp
         resources: 
           requests:

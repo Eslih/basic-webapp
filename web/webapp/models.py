@@ -1,6 +1,15 @@
 from . import db
 
 
+def delete_users():
+    try:
+        num_rows_deleted = db.session.query(User).delete()
+        db.session.commit()
+        return num_rows_deleted
+    except Exception:
+        db.session.rollback()
+
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -14,12 +23,3 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
-
-
-    def delete_users():
-        try:
-            num_rows_deleted = db.session.query(User).delete()
-            db.session.commit()
-            return num_rows_deleted
-        except:
-            db.session.rollback()
