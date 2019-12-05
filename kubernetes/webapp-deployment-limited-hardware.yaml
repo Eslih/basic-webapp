@@ -43,10 +43,10 @@ spec:
         name: webapp
         resources: 
           requests:
-            memory: "16Mi"
-            cpu: "50m"
+            memory: "64Mi"
+            cpu: "10m"
           limits:
-            memory: "32Mi"
-            cpu: "100m"
+            memory: "128Mi"
+            cpu: "50m"
       restartPolicy: Always
 status: {}
