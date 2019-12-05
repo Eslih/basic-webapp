@@ -1,27 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.19.0 (f63a961c)
-  creationTimestamp: null
   labels:
-    io.kompose.service: webapp
+    app: webapp
   name: webapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      io.kompose.service: webapp
-  strategy: {}
+      app: webapp
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.19.0 (f63a961c)
-      creationTimestamp: null
       labels:
-        io.kompose.service: webapp
+        app: webapp
     spec:
       containers:
       - args:
@@ -49,4 +40,3 @@ spec:
             memory: "128Mi"
             cpu: "50m"
       restartPolicy: Always
-status: {}
