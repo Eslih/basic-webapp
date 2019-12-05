@@ -15,7 +15,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-    def delete_users(self):
+    def delete_users():
         try:
             num_rows_deleted = db.session.query(User).delete()
             db.session.commit()
