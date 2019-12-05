@@ -24,7 +24,7 @@ def delete_users():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     try:
-        num_deleted = delete_users()
+        num_deleted = User.delete_users()
         session['logged_in'] = False
         return render_template('users.html', message='All users (' + str(num_deleted) + ') are deleted.')
     except Exception as e:
