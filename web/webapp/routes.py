@@ -63,10 +63,18 @@ def login():
 @app.route('/registration', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        new_user = User(username=request.form['username'], password=request.form['password'])
+        try:
+            data = User.query.filter_by(username=request.form['username']).first()
+            if data:
+                return render_template('register.html', error='A user with this username already exits!')
 
-        db.session.add(new_user)
-        db.session.commit()
+            new_user = User(username=request.form['username'], password=request.form['password'])
+
+            db.session.add(new_user)
+            db.session.commit()
+        except Exception as e:
+            return "Some very good exception handling!" + str(e)
+
         return render_template('login.html')
     return render_template('register.html')
 
