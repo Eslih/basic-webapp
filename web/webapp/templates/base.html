@@ -45,6 +45,9 @@
             </p>
            <p>
                <span class="badge badge-info">Hostname: {{ hostname }} | Request time: {{ g.request_time() }}</span>
+               {% if session['logged_in'] %}
+               <a href="/users" class="badge badge-light">Users overview</a>
+               {% endif %}
            </p>
         </div>
     </section>

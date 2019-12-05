@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <h1 class="jumbotron-heading">Users overview</h1>
-    <p>Look at this beautiful table. It shows all the users their credentials.</p>
+    {% if users %}
+    <p>
+        Look at this beautiful table. It shows all the users their credentials.
+    </p>
+   <p>
+        <a class="btn btn-danger btn-lg" href="/users/delete" role="button">Delete users</a>
+   </p>
     <table class="table table-hover">
         <thead class="thead-dark">
             <tr>
@@ -20,4 +26,9 @@
            {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+       {{ message }} <a href="/registration">Register</a>!
+    </div>
+    {% endif %}
 {% endblock %}
