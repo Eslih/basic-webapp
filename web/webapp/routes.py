@@ -118,7 +118,7 @@ def cat():
 
     r = randint(0, 3)
 
-    return render_template('cat.html', cat=cats[r])
+    return render_template('cats.html', cat=cats[r])
 
 
 @app.route('/logout')
