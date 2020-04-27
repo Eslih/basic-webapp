@@ -10,7 +10,7 @@ stages:
 - name: envsubst
   steps:
   - runScriptConfig:
-      image: python:latest
-      shellScript: "export WEBAPPVERSION=v1.0.9\nenvsubst < kubernetes/webapp-deployment.yaml "
+      image: alpine:latest
+      shellScript: "export WEBAPPVERSION=v1.0.9 && envsubst < kubernetes/webapp-deployment.yaml "
 timeout: 60
 notification: {}
