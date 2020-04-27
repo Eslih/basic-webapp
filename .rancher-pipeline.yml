@@ -7,12 +7,10 @@ stages:
       tag: godofneon/web-app
       pushRemote: true
       registry: index.docker.io
-- name: Kubernetes
+- name: envsubst
   steps:
-  - applyYamlConfig:
-      path: kubernetes/webapp-deployment.yaml
-    env:
-      repository: godofneon/web-app
-      version: v1.0.8
+  - runScriptConfig:
+      image: python:latest
+      shellScript: "export WEBAPPVERSION=v1.0.9\nenvsubst < kubernetes/webapp-deployment.yaml "
 timeout: 60
 notification: {}
