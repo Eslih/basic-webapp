@@ -31,7 +31,7 @@ spec:
           value: "5432"
         - name: PG_USER
           value: student_user
-        image: eslih/basic-webapp:{{WEBAPPVERSION}}
+        image: godofneon/basic-webapp:{{WEBAPPVERSION}}
         name: webapp
         resources: {}
       restartPolicy: Always
