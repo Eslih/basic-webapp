@@ -1,16 +1,8 @@
 stages:
-- name: Build Docker
-  steps:
-  - publishImageConfig:
-      dockerfilePath: web/Dockerfile
-      buildContext: web
-      tag: godofneon/web-app
-      pushRemote: true
-      registry: index.docker.io
 - name: envsubst
   steps:
   - runScriptConfig:
       image: alpine:latest
-      shellScript: 'export WEBAPPVERSION=v1.0.9 && envsubst < kubernetes/webapp-deployment.yaml '
+      shellScript: 'export WEBAPPVERSION=v1.0.9 && /usr/bin/envsubst < kubernetes/webapp-deployment.yaml '
 timeout: 60
 notification: {}
