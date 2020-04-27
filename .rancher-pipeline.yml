@@ -3,6 +3,7 @@ stages:
   steps:
   - runScriptConfig:
       image: alpine:latest
-      shellScript: 'export WEBAPPVERSION=v1.0.9 && /usr/bin/envsubst < kubernetes/webapp-deployment.yaml '
+      shellScript: export WEBAPPVERSION=v1.0.9 && sed -i "s/{{WEBAPPVERSION}}/$WEBAPPVERSION/g"
+        kubernetes/webapp-deployment.yaml
 timeout: 60
 notification: {}
