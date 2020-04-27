@@ -5,5 +5,9 @@ stages:
       image: alpine:latest
       shellScript: export WEBAPPVERSION=v1.0.9 && sed -i "s/{{WEBAPPVERSION}}/$WEBAPPVERSION/g"
         kubernetes/webapp-deployment.yaml
+- name: K8s
+  steps:
+  - applyYamlConfig:
+      path: ./kubernetes/webapp-deployment.yaml
 timeout: 60
 notification: {}
