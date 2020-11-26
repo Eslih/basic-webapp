@@ -26,6 +26,8 @@ COPY ./entrypoint.sh .
 
 COPY ./ ./
 
+RUN chmod +x /app/entrypoint.sh
+
 ENTRYPOINT ["/app/entrypoint.sh"]
 
 #RUN addgroup -S uwsgi && adduser -S uwsgi -G uwsgi
