@@ -1,19 +1,26 @@
 version: '3.8'
 services:
-  webapp:
-    #image: eslih/basic-webapp:v1.0.1
-    build: ./web
-    command: uwsgi --ini app.ini
-    expose:
-      - 5000
+  api:
+    build: ./api
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
     environment:
       - PG_PASSWORD=student_password
       - PG_USER=student_user
       - PG_DATABASE=labo
       - PG_PORT=5432
       - PG_HOST=postgres
+      - PORT=8080
+  webapp:
+    #image: eslih/basic-webapp:v1.0.1
+    build: ./web
+    command: uwsgi --ini app.ini
+    ports:
+      - 5000:5000
     depends_on:
-      - postgres
+      - api
   nginx:
     image: webapp-nginx
     build: ./nginx
