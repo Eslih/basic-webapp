@@ -1,8 +1,8 @@
 #!/bin/sh
 
-while ! nc -z $PG_HOST $PG_PORT ; do
+while ! nc -z "$PG_HOST" "$PG_PORT" ; do
   sleep 10
-  printf "Database %ss:%s not ready" $PG_HOST $PG_PORT
+  printf "Database %ss:%s not ready" "$PG_HOST" "$PG_PORT"
 done
 
 exec "$@"
