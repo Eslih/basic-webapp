@@ -8,8 +8,8 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-     app: postgres
-  strategy: {}
+      app: postgres
+  strategy: { }
   template:
     metadata:
       creationTimestamp: null
@@ -17,15 +17,24 @@ spec:
         app: postgres
     spec:
       containers:
-      - env:
-        - name: POSTGRES_DB
-          value: labo
-        - name: POSTGRES_PASSWORD
-          value: student_password
-        - name: POSTGRES_USER
-          value: student_user
-        image: postgres:12.1-alpine
-        name: postgres
-        resources: {}
+        - env:
+            - name: POSTGRES_DB
+              value: labo
+            - name: POSTGRES_PASSWORD
+              value: student_password
+            - name: POSTGRES_USER
+              value: student_user
+          image: postgres:13.1-alpine
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-pvc
+          name: postgres
+          resources: { }
       restartPolicy: Always
-status: {}
+      volumes:
+        - name: postgres-pvc
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+status: { }

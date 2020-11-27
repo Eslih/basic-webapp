@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   api:
+    image: eslih/basic-webapp-api:v1.1.0
     build: ./api
     expose:
       - 8080
@@ -12,9 +13,8 @@ services:
       - PG_DATABASE=labo
       - PG_PORT=5432
       - PG_HOST=postgres
-      - PORT=8080
   webapp:
-    #image: eslih/basic-webapp:v1.0.1
+    image: eslih/basic-webapp-frontend:v1.1.0
     build: ./web
     command: uwsgi --ini app.ini
     expose:
@@ -24,7 +24,7 @@ services:
     volumes:
     - statics:/app/webapp/static
   nginx:
-    image: webapp-nginx
+    image: eslih/basic-webapp-nginx:v1.1.0
     build: ./nginx
     ports:
       - 80:80

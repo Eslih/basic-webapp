@@ -5,7 +5,7 @@ metadata:
     app: webapp
   name: webapp
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: webapp
@@ -20,18 +20,7 @@ spec:
         - uwsgi
         - --ini
         - app.ini
-        env:
-        - name: PG_DATABASE
-          value: labo
-        - name: PG_HOST
-          value: postgres
-        - name: PG_PASSWORD
-          value: student_password
-        - name: PG_PORT
-          value: "5432"
-        - name: PG_USER
-          value: student_user
-        image: eslih/basic-webapp:v1.0.9
+        image: eslih/basic-webapp-frontend:v1.1.0
         name: webapp
         resources: {}
       restartPolicy: Always
