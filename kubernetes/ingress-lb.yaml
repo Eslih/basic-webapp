@@ -12,9 +12,9 @@ spec:
           - backend:
               serviceName: nginx
               servicePort: 80
-    - host: api.192.168.40.72.xip.io
-      http:
-        paths:
-          - backend:
-              serviceName: api
-              servicePort: 8080
+#    - host: api.192.168.40.72.xip.io
+#      http:
+#        paths:
+#          - backend:
+#              serviceName: api
+#              servicePort: 8080
