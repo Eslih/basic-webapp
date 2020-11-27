@@ -1,6 +1,6 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8-alpine3.10 as build-image
 
-RUN apk add --no-cache linux-headers g++ postgresql-dev gcc python3-dev musl-dev
+RUN apk add --no-cache g++ postgresql-dev
 
 COPY ./requirements.txt ./
 
