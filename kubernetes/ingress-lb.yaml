@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: webapp
+  name: webapp
+spec:
+  rules:
+    - host: webapp.192.168.40.72.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: nginx
+              servicePort: 80
+    - host: api.192.168.40.72.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: api
+              servicePort: 8080
