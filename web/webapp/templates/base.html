@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='github-ribbon.css') }}">
 </head>
 
 <body>
@@ -24,12 +25,12 @@
             <a href="/" class="navbar-brand d-flex align-items-center">
                 <strong>Some cool Docker App</strong>
             </a>
+            <a href="https://github.com/Eslih/basic-webapp" class="ribbon">Fork me on GitHub</a>
         </div>
     </div>
 </header>
 
 <main role="main">
-
     <section class="jumbotron text-center">
         <div class="container">
             {% block content %}{% endblock %}
@@ -57,7 +58,8 @@
                     </span>
                 {% endif %}
             </p>
-            <p class="font-weight-light">Version 1.1.1</p>
+            <p class="font-weight-light">Version 1.1.1
+            </p>
         </div>
     </section>
 </main>
