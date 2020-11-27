@@ -30,5 +30,11 @@ spec:
           value: student_user
         image: eslih/basic-webapp-api:v1.1.1
         name: api
-        resources: {}
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
       restartPolicy: Always

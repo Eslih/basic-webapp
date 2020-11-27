@@ -2,9 +2,12 @@ from random import randint
 from typing import Optional
 
 import requests
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, status, Request
 from fastapi_versioning import VersionedFastAPI, version
 from pydantic import BaseModel
+
+import time
+import socket
 
 from models import User, db
 
@@ -20,7 +23,9 @@ app = FastAPI()
 @app.get('/', status_code=200)
 @version(1)
 def root():
-    return {"Hello ": "world!"}
+    print("hoi")
+    return {"message": "Hello World"}
+
 
 @app.delete('/users/delete', status_code=200)
 @version(1)
@@ -138,3 +143,15 @@ def cats(response: Response):
 app = VersionedFastAPI(app,
                        version_format='{major}',
                        prefix_format='/v{major}')
+
+
+# VersionedFastAPI will only load the "title" of the original app
+# Middleware should be registered or added like below :-)
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    processing_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str("%.5fs" % processing_time)
+    response.headers["X-API-Hostname"] = str(socket.gethostname())
+    return response

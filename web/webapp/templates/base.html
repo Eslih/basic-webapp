@@ -44,12 +44,20 @@
                 {% endif %}
             </p>
             <p>
-                <span class="badge badge-info">Hostname: {{ hostname }} | Request time: {{ g.request_time() }}</span>
+                <span class="badge badge-info">Hostname: {{ hostname }} | Frontend Request time: {{ g.request_time() }}</span>
                 {% if session['logged_in'] %}
                     <a href="/users" class="badge badge-light">Users overview</a>
                 {% endif %}
             </p>
-            <p class="font-weight-light">Version 1.1.0</p>
+            <p>
+                {% if api_headers %}
+                    <span class="badge badge-dark">
+                        API Hostname: {{ api_headers['x-api-hostname'] }} |
+                        API Processing Time: {{ api_headers['x-process-time'] }}
+                    </span>
+                {% endif %}
+            </p>
+            <p class="font-weight-light">Version 1.1.1</p>
         </div>
     </section>
 </main>
