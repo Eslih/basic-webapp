@@ -11,9 +11,6 @@
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
-    /* effects with some shadow */
-    box-shadow: 0 0 0 3px #000000, 0 0 20px -3px rgba(0, 0, 0, 0.5);
-    text-shadow: 0 0 0 #ffffff, 0 0 5px rgba(0, 0, 0, 0.3);
     /* looks */
     background-color: #000000;
     color: #ffffff;
