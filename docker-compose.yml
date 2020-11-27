@@ -13,6 +13,7 @@ services:
       - PG_DATABASE=labo
       - PG_PORT=5432
       - PG_HOST=postgres
+      - PORT=8080
   webapp:
     image: eslih/basic-webapp-frontend:v1.1.0
     build: ./web
