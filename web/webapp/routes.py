@@ -41,8 +41,8 @@ def users():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     try:
-        data = requests.get('http://api:8080/v1/users').json()
-        return render_template('users.html', users=data)
+        data = requests.get('http://api:8080/v1/users')
+        return render_template('users.html', users=data.json(), api_headers=data.headers)
     except Exception as e:
         return "Some very good exception handling!" + str(e)
 
@@ -61,7 +61,8 @@ def login():
                 session['logged_in'] = True
                 return redirect(url_for('home'))
             else:
-                return render_template('index.html', data={'username': username, 'password': password})
+                return render_template('index.html', data={'username': username, 'password': password},
+                                       api_headers=data.headers)
 
         except Exception as e:
             return "Some very good exception handling!"
@@ -75,12 +76,13 @@ def register():
             password = request.form['password']
             data = requests.post('http://api:8080/v1/register', json={'username': username, 'password': password})
             if data.status_code != 201:
-                return render_template('register.html', error='A user with this username already exits!')
+                return render_template('register.html', error='A user with this username already exits!',
+                                       api_headers=data.headers)
 
         except Exception as e:
             return "Some very good exception handling!" + str(e)
 
-        return render_template('login.html')
+        return render_template('login.html', api_headers=data.headers)
     return render_template('register.html')
 
 
@@ -90,8 +92,8 @@ def prime(lower=0, upper=10000):
     try:
         p = requests.get('http://api:8080/v1/primes/{}/{}'.format(lower, upper))
         if p.status_code != 200:
-            return render_template('primes.html', error=p.json()['error'])
-        return render_template('primes.html', primes=p.json())
+            return render_template('primes.html', error=p.json()['error'], api_headers=p.headers)
+        return render_template('primes.html', primes=p.json(), api_headers=p.headers)
     except Exception as e:
         return "Some very good exception handling!" + str(e)
 
@@ -101,9 +103,9 @@ def cat():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
 
-    p = requests.get('http://api:8080/v1/cats').json()['cats']
+    p = requests.get('http://api:8080/v1/cats')
 
-    return render_template('cats.html', cat=p)
+    return render_template('cats.html', cat=p.json()['cats'], api_headers=p.headers)
 
 
 @app.route('/logout')
