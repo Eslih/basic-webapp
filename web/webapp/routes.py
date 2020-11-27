@@ -75,7 +75,7 @@ def register():
             username = request.form['username']
             password = request.form['password']
             data = requests.post('http://api:8080/v1/register', json={'username': username, 'password': password})
-            if data.status_code != 201:
+            if data.status_code == 400:
                 return render_template('register.html', error='A user with this username already exits!',
                                        api_headers=data.headers)
 
