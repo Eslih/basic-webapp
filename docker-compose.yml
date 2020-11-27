@@ -23,7 +23,7 @@ services:
     depends_on:
       - api
     volumes:
-    - statics:/app/webapp/static
+    - statics:/app/webapp/static:ro
   nginx:
     image: eslih/basic-webapp-nginx:v1.1.1
     build: ./nginx
@@ -32,7 +32,7 @@ services:
     depends_on:
       - webapp
     volumes:
-    - statics:/app/static
+    - statics:/app/static:ro
   postgres:
     image: 'postgres:13.1-alpine'
     environment:
