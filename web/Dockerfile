@@ -21,3 +21,7 @@ COPY --from=build-image /app/requirements.txt ./
 RUN pip install --no-index --find-links=/root/wheels -r requirements.txt
 
 COPY ./ ./
+
+RUN addgroup -S uwsgi && adduser -S uwsgi -G uwsgi
+
+USER uwsgi
