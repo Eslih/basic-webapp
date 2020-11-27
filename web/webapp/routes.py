@@ -87,10 +87,13 @@ def register():
 @app.route('/primes')
 @app.route('/primes/<int:lower>/<int:upper>')
 def prime(lower=0, upper=10000):
-    p = requests.get('http://api:8080/v1/primes/{}/{}'.format(lower, upper))
-    if p.status_code != 200:
-        return render_template('primes.html', error=p.json()['error'])
-    return render_template('primes.html', primes=p.json())
+    try:
+        p = requests.get('http://api:8080/v1/primes/{}/{}'.format(lower, upper))
+        if p.status_code != 200:
+            return render_template('primes.html', error=p.json()['error'])
+        return render_template('primes.html', primes=p.json())
+    except Exception as e:
+        return "Some very good exception handling!" + str(e)
 
 
 @app.route('/cats')
