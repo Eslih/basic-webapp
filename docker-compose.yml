@@ -21,6 +21,8 @@ services:
       - 5000
     depends_on:
       - api
+    volumes:
+    - statics:/app/webapp/static
   nginx:
     image: webapp-nginx
     build: ./nginx
@@ -28,9 +30,13 @@ services:
       - 80:80
     depends_on:
       - webapp
+    volumes:
+    - statics:/app/static
   postgres:
     image: 'postgres:13.1-alpine'
     environment:
       - POSTGRES_PASSWORD=student_password
       - POSTGRES_USER=student_user
       - POSTGRES_DB=labo
+volumes:
+  statics:

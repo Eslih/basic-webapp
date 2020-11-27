@@ -1,4 +1,4 @@
-from flask import url_for, render_template, request, redirect, session, g
+from flask import url_for, render_template, request, redirect, session, g, send_from_directory
 from flask import current_app as app
 
 import socket
@@ -9,6 +9,11 @@ import requests
 @app.context_processor
 def inject_hostname():
     return dict(hostname=socket.gethostname())
+
+
+@app.route("/static/<path:filename>")
+def staticfiles(filename):
+    return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
 
 @app.route('/')
