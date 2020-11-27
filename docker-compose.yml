@@ -2,8 +2,8 @@ version: '3.8'
 services:
   api:
     build: ./api
-    ports:
-      - 8080:8080
+    expose:
+      - 8080
     depends_on:
       - postgres
     environment:
@@ -17,8 +17,8 @@ services:
     #image: eslih/basic-webapp:v1.0.1
     build: ./web
     command: uwsgi --ini app.ini
-    ports:
-      - 5000:5000
+    expose:
+      - 5000
     depends_on:
       - api
   nginx:
