@@ -10,7 +10,7 @@ spec:
   capacity:
     storage: 100M
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   hostPath:
     path: "/mnt/data"
 ---
@@ -23,7 +23,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 100M
@@ -37,7 +37,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   resources:
     requests:
       storage: 100M

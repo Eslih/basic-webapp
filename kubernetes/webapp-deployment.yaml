@@ -20,7 +20,13 @@ spec:
         - uwsgi
         - --ini
         - app.ini
-        image: eslih/basic-webapp-frontend:v1.1.1
+        image: eslih/basic-webapp-frontend:v1.1.2
         name: webapp
-        resources: {}
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "50m"
       restartPolicy: Always

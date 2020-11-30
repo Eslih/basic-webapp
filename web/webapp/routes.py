@@ -108,6 +108,13 @@ def cat():
     return render_template('cats.html', cat=p.json()['cats'], api_headers=p.headers)
 
 
+@app.route('/joke')
+def joke():
+    p = requests.get('http://api:8080/v1/joke')
+
+    return render_template('joke.html', joke=p.json()['joke'], api_headers=p.headers)
+
+
 @app.route('/logout')
 def logout():
     session['logged_in'] = False

@@ -16,7 +16,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: eslih/basic-webapp-nginx:v1.1.1
+      - image: eslih/basic-webapp-nginx:v1.1.2
         name: nginx
         ports:
         - containerPort: 80

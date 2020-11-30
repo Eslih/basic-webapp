@@ -139,6 +139,19 @@ def cats(response: Response):
         return "Some very good exception handling!"
 
 
+@app.get('/joke', status_code=200)
+@version(1)
+def cats(response: Response):
+    try:
+        joke = requests.get('https://icanhazdadjoke.com', headers={"Accept": "application/json"})
+        return {'joke': joke.json()['joke']}
+
+    except Exception as e:
+        print(e)
+        response.status_code = 500
+        return "Some very good exception handling!"
+
+
 app = VersionedFastAPI(app,
                        version_format='{major}',
                        prefix_format='/v{major}')
