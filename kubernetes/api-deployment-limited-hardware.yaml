@@ -32,9 +32,9 @@ spec:
         name: api
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "10m"
-          limits:
             memory: "128Mi"
-            cpu: "50m"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
       restartPolicy: Always
