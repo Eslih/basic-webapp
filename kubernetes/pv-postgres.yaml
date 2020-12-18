@@ -1,29 +1,12 @@
----
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: postgres-pv
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 1000M
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data/postgres"
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    app: postgres
-  name: postgres-pvc
+  # Name must start with longhorn-...
+  name: longhorn-postgres-pvc
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 1000M
+      storage: 1Gi

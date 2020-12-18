@@ -22,11 +22,11 @@ spec:
         - containerPort: 80
         volumeMounts:
           - mountPath: /app/static
-            name: statics-pvc
+            name: statics
         resources: {}
       restartPolicy: Always
       volumes:
-        - name: statics-pvc
+        - name: statics
           persistentVolumeClaim:
-            claimName: statics-pvc
+            claimName: longhorn-statics-pvc
 status: {}

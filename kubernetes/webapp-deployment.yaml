@@ -24,7 +24,7 @@ spec:
         name: webapp
         volumeMounts:
           - mountPath: /app/static
-            name: statics-pvc
+            name: statics
         resources:
           requests:
             memory: "64Mi"
@@ -34,6 +34,6 @@ spec:
             cpu: "200m"
       restartPolicy: Always
       volumes:
-        - name: statics-pvc
+        - name: statics
           persistentVolumeClaim:
-            claimName: statics-pvc
+            claimName: longhorn-statics-pvc

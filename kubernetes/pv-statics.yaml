@@ -1,43 +1,13 @@
 ---
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: statics-pv
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 100M
-  accessModes:
-    - ReadWriteMany
-  hostPath:
-    path: "/mnt/data/statics"
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  labels:
-    app: nginx
-  name: statics-pvc
+  # Name must start with longhorn-...
+  name: longhorn-statics-pvc
 spec:
-  storageClassName: manual
   accessModes:
     - ReadWriteMany
-  resources:
-    requests:
-      storage: 100M
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: webapp
-  name: statics-pvc
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 100M
