@@ -17,20 +17,20 @@ spec:
         app: postgres
     spec:
       containers:
-        - env:
+        - image: postgres:13.1-alpine
+          name: postgres
+          env:
             - name: POSTGRES_DB
               value: labo
             - name: POSTGRES_PASSWORD
               value: student_password
             - name: POSTGRES_USER
               value: student_user
-          image: postgres:13.1-alpine
           ports:
             - containerPort: 5432
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-pvc
-          name: postgres
           resources: { }
       restartPolicy: Always
       volumes:
