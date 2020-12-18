@@ -22,6 +22,9 @@ spec:
         - app.ini
         image: eslih/basic-webapp-frontend:v1.1.2
         name: webapp
+        volumeMounts:
+          - mountPath: /app/static
+            name: statics-pvc
         resources:
           requests:
             memory: "64Mi"
@@ -30,3 +33,7 @@ spec:
             memory: "256Mi"
             cpu: "200m"
       restartPolicy: Always
+      volumes:
+        - name: statics-pvc
+          persistentVolumeClaim:
+            claimName: statics-pvc

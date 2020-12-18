@@ -20,6 +20,13 @@ spec:
         name: nginx
         ports:
         - containerPort: 80
+        volumeMounts:
+          - mountPath: /app/static
+            name: statics-pvc
         resources: {}
       restartPolicy: Always
+      volumes:
+        - name: statics-pvc
+          persistentVolumeClaim:
+            claimName: statics-pvc
 status: {}
