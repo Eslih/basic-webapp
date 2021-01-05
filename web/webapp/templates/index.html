@@ -10,6 +10,8 @@
         <h1 class="jumbotron-heading">Index</h1>
         <p class="lead text-muted">Some inspiring text.</p>
 
+        <img src="{{ url_for('static', filename='nathan.jpg') }}" />
+
         {% if data %}
             <div class="alert alert-danger" role="alert">
                 <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong> and

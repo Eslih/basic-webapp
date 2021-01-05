@@ -20,13 +20,13 @@ spec:
         name: nginx
         ports:
         - containerPort: 80
-        volumeMounts:
-          - mountPath: /app/static
-            name: statics
+#        volumeMounts:
+#          - mountPath: /app/static
+#            name: statics
         resources: {}
       restartPolicy: Always
-      volumes:
-        - name: statics
-          persistentVolumeClaim:
-            claimName: longhorn-statics-pvc
+#      volumes:
+#        - name: statics
+#          persistentVolumeClaim:
+#            claimName: longhorn-statics-pvc
 status: {}

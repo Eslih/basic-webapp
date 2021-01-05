@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   api:
     image: eslih/basic-webapp-api:v1.1.2
@@ -14,6 +15,7 @@ services:
       - PG_PORT=5432
       - PG_HOST=postgres
       - PORT=8080
+
   webapp:
     image: eslih/basic-webapp-frontend:v1.1.2
     build: ./web
@@ -22,8 +24,16 @@ services:
       - 5000
     depends_on:
       - api
-    volumes:
-    - statics:/app/webapp/static:ro
+    environment:
+      - SECRET_KEY=SuPeR_SeCrEt_KeY
+      - ENVIRONMENT=production
+      - FLASKS3_ENDPOINT_URL=http://minio.192.168.40.72.xip.io
+      - FLASKS3_BUCKET_DOMAIN=minio.192.168.40.72.xip.io
+      - AWS_ACCESS_KEY_ID=e7lCqW11OjjvJs8TZ3ak
+      - AWS_SECRET_ACCESS_KEY=5QdRl6mk3nYBrOUHmw5BA9KjbSeG6jpFTGaSMx8B
+  #    volumes:
+  #    - statics:/app/webapp/static:ro
+
   nginx:
     image: eslih/basic-webapp-nginx:v1.1.2
     build: ./nginx
@@ -31,8 +41,9 @@ services:
       - 80:80
     depends_on:
       - webapp
-    volumes:
-    - statics:/app/static:ro
+  #    volumes:
+  #    - statics:/app/static:ro
+
   postgres:
     image: 'postgres:13.1-alpine'
     environment:
@@ -41,6 +52,13 @@ services:
       - POSTGRES_DB=labo
     volumes:
       - postgres:/var/lib/postgresql/data/
+
 volumes:
-  statics:
+  #  statics:
   postgres:
+
+secrets:
+  db_user:
+    external: true
+  db_password:
+    external: true

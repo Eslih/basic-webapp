@@ -22,9 +22,9 @@ spec:
         - app.ini
         image: eslih/basic-webapp-frontend:v1.1.2
         name: webapp
-        volumeMounts:
-          - mountPath: /app/static
-            name: statics
+#        volumeMounts:
+#          - mountPath: /app/static
+#            name: statics
         resources:
           requests:
             memory: "64Mi"
@@ -33,7 +33,7 @@ spec:
             memory: "256Mi"
             cpu: "200m"
       restartPolicy: Always
-      volumes:
-        - name: statics
-          persistentVolumeClaim:
-            claimName: longhorn-statics-pvc
+#      volumes:
+#        - name: statics
+#          persistentVolumeClaim:
+#            claimName: longhorn-statics-pvc

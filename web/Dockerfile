@@ -2,7 +2,7 @@ FROM python:3.9.0-alpine as build-image
 
 WORKDIR '/app'
 
-RUN apk add --no-cache linux-headers g++
+RUN apk add --no-cache linux-headers g++ git
 
 COPY ./requirements.txt ./
 
@@ -13,6 +13,8 @@ RUN pip wheel --wheel-dir=/root/wheels -r requirements.txt
 FROM python:3.9.0-alpine as production-image
 
 WORKDIR '/app'
+
+RUN apk add git
 
 COPY --from=build-image /root/wheels /root/wheels
 
