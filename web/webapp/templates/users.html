@@ -6,7 +6,7 @@
             Look at this beautiful table. It shows all the users their credentials.
         </p>
         <p>
-            <a class="btn btn-danger btn-lg" href="/user/delete" role="button">Delete users</a>
+            <a class="btn btn-danger btn-lg" href="{{ url_for('user_blueprint.delete') }}" role="button">Delete users</a>
         </p>
         <table class="table table-hover">
             <thead class="thead-dark">
@@ -30,7 +30,7 @@
         </table>
     {% else %}
         <div class="alert alert-warning" role="alert">
-            {{ message }} <a href="/user/register">Register</a>!
+            {{ message }} <a href="{{ url_for('user_blueprint.register') }}">Register</a>!
         </div>
     {% endif %}
 {% endblock %}
