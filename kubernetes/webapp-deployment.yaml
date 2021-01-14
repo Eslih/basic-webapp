@@ -5,7 +5,7 @@ metadata:
     app: webapp
   name: webapp
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: webapp
@@ -20,7 +20,20 @@ spec:
         - uwsgi
         - --ini
         - app.ini
-        image: eslih/basic-webapp-frontend:v1.1.1
+        image: eslih/basic-webapp-frontend:v1.2.0
         name: webapp
-        resources: {}
+#        volumeMounts:
+#          - mountPath: /app/static
+#            name: statics
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
       restartPolicy: Always
+#      volumes:
+#        - name: statics
+#          persistentVolumeClaim:
+#            claimName: longhorn-statics-pvc

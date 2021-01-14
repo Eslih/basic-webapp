@@ -1,0 +1,32 @@
+/* https://www.kirilv.com/fork-ribbon-css-builder/ */
+.ribbon {
+    /* positioning */
+    position: fixed;
+    padding: 5px 45px;
+    width: 128px;
+    /* top right of the page */
+    top: 50px;
+    right: -50px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    /* looks */
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 13px;
+    font-family: sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    /* ribbon effects */
+    border: 2px dotted #ffffff;
+    /* webkit antialias fix */
+    -webkit-backface-visibility: hidden;
+    letter-spacing: .5px;
+    box-sizing: content-box
+}
+.ribbon:hover{
+    text-decoration: none;
+    color: #555555;
+    border: 2px dotted #555555;
+}

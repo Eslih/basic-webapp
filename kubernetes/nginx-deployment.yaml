@@ -16,10 +16,17 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: eslih/basic-webapp-nginx:v1.1.1
+      - image: eslih/basic-webapp-nginx:v1.2.0
         name: nginx
         ports:
         - containerPort: 80
+#        volumeMounts:
+#          - mountPath: /app/static
+#            name: statics
         resources: {}
       restartPolicy: Always
+#      volumes:
+#        - name: statics
+#          persistentVolumeClaim:
+#            claimName: longhorn-statics-pvc
 status: {}

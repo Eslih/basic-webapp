@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='github-ribbon.css') }}">
 </head>
 
 <body>
@@ -22,31 +23,31 @@
     <div class="navbar navbar-dark bg-dark box-shadow">
         <div class="container d-flex justify-content-between">
             <a href="/" class="navbar-brand d-flex align-items-center">
-                <strong>Some cool Docker App</strong>
+                <strong>Some Cool Docker / Kubernetes App</strong>
             </a>
+            <a href="https://github.com/Eslih/basic-webapp" class="ribbon">Fork me on GitHub</a>
         </div>
     </div>
 </header>
 
 <main role="main">
-
     <section class="jumbotron text-center">
         <div class="container">
             {% block content %}{% endblock %}
             <p>
-                {% if session['logged_in'] %}
-                    <a href="/logout" class="btn btn-danger">Logout</a>
+                {% if current_user.is_authenticated %}
+                    <a href="/auth/logout" class="btn btn-danger">Logout</a>
                 {% else %}
-                    {% if request.path!="/login" and request.path!="/registration" %}
-                        <a href="/login" class="btn btn-primary">Login</a>
-                        <a href="/registration" class="btn btn-secondary">Register</a>
+                    {% if request.path!="/auth/login" and request.path!="/user/register" %}
+                        <a href="/auth/login" class="btn btn-primary">Login</a>
+                        <a href="/user/register" class="btn btn-secondary">Register</a>
                     {% endif %}
                 {% endif %}
             </p>
             <p>
                 <span class="badge badge-info">Hostname: {{ hostname }} | Frontend Request time: {{ g.request_time() }}</span>
-                {% if session['logged_in'] %}
-                    <a href="/users" class="badge badge-light">Users overview</a>
+                {% if current_user.is_authenticated %}
+                    <a href="/user" class="badge badge-light">Users overview</a>
                 {% endif %}
             </p>
             <p>
@@ -57,7 +58,8 @@
                     </span>
                 {% endif %}
             </p>
-            <p class="font-weight-light">Version 1.1.1</p>
+            <p class="font-weight-light">Version 1.2.0
+            </p>
         </div>
     </section>
 </main>

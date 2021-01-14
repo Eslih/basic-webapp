@@ -1,46 +1,96 @@
 version: '3.8'
+
 services:
   api:
-    image: eslih/basic-webapp-api:v1.1.1
+    image: eslih/basic-webapp-api:v1.2.0
+    # I automatically map secrets to environment vars
+    # Think this is a clean(er) solution (than using the _FILE "best" practice)
+    secrets:
+      - pg_password
+      - pg_user
+      - pg_database
     build: ./api
-    expose:
-      - 8080
+    ports:
+      - 8080:8080
     depends_on:
       - postgres
     environment:
-      - PG_PASSWORD=student_password
-      - PG_USER=student_user
-      - PG_DATABASE=labo
       - PG_PORT=5432
       - PG_HOST=postgres
       - PORT=8080
+
   webapp:
-    image: eslih/basic-webapp-frontend:v1.1.1
+    image: eslih/basic-webapp-frontend:v1.2.0
+    # I automatically map secrets to environment vars
+    # Think this is a clean(er) solution (than using the _FILE "best" practice)
+    secrets:
+      - flask_secret_key
+      - aws_access_key_id
+      - aws_secret_access_key
     build: ./web
     command: uwsgi --ini app.ini
     expose:
       - 5000
     depends_on:
       - api
-    volumes:
-    - statics:/app/webapp/static:ro
+    environment:
+      - ENVIRONMENT=production
+      - FLASKS3_ENDPOINT_URL=http://minio.192.168.40.72.xip.io
+      - FLASKS3_BUCKET_DOMAIN=minio.192.168.40.72.xip.io
+  #    volumes:
+  #    - statics:/app/webapp/static:ro
+
   nginx:
-    image: eslih/basic-webapp-nginx:v1.1.1
+    image: eslih/basic-webapp-nginx:v1.2.0
     build: ./nginx
     ports:
       - 80:80
     depends_on:
       - webapp
-    volumes:
-    - statics:/app/static:ro
+  #    volumes:
+  #    - statics:/app/static:ro
+
   postgres:
     image: 'postgres:13.1-alpine'
+    secrets:
+      - pg_password
+      - pg_user
+      - pg_database
     environment:
-      - POSTGRES_PASSWORD=student_password
-      - POSTGRES_USER=student_user
-      - POSTGRES_DB=labo
+      - POSTGRES_USER_FILE=/run/secrets/pg_user
+      - POSTGRES_PASSWORD_FILE=/run/secrets/pg_password
+      - POSTGRES_DB_FILE=/run/secrets/pg_database
     volumes:
       - postgres:/var/lib/postgresql/data/
+
+  pgadmin:
+    image: 'dpage/pgadmin4:4.29'
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=esli.heyvaert@howest.be
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "5050:5050"
+
 volumes:
-  statics:
+  #  statics:
   postgres:
+
+# External would be better for production env
+# Plain text files on a production machine is unwanted
+# Maybe Hashicorp Vault would be a great solution (didn't play around with it yet)
+## https://www.hashicorp.com/resources/securing-container-secrets-vault
+secrets:
+  pg_password:
+    file: secret_pg_password.txt
+  pg_user:
+    file: secret_pg_user.txt
+  pg_database:
+    file: secret_pg_database.txt
+  flask_secret_key:
+    file: secret_flask_secret_key.txt
+  aws_access_key_id:
+    file: secret_aws_access_key_id.txt
+  aws_secret_access_key:
+    file: secret_aws_secret_access_key.txt

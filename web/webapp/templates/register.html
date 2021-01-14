@@ -6,22 +6,30 @@
     {% else %}
         <h1 class="jumbotron-heading">Register</h1>
         <p class="lead text-muted">You won't regret, coolest app ever!</p>
-        {% if error %}
+        {% if error or form.errors.items() %}
             <div class="alert alert-danger" role="alert">
-                <strong>Username already taken!</strong> This app is so cool that the username is already taken!
+                {{ error }}
+                {% for field, errors in form.errors.items() %}
+                    <p><strong>{{ form[field].label }}:</strong> {{ ', '.join(errors) }}</p>
+                {% endfor %}
             </div>
-                        {{ error }}
         {% endif %}
-        <form action="/registration" method="POST">
+
+        <form role="form" action="" method="POST">
+
+            {{ form.hidden_tag() }}
+
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="username" class="form-control" id="username" name="username"
-                       placeholder="Enter username">
-                </small>
+                {{ form.username.label }}
+                {{ form.username(placeholder="Enter username", class="form-control") }}
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                {{ form.email.label }}
+                {{ form.email(placeholder="Enter email", class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(placeholder="Enter password", class="form-control", type="password") }}
             </div>
             <button type="submit" class="btn btn-success">Register!</button>
         </form>

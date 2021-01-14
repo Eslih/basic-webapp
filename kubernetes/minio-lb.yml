@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: minio
+  name: minio
+spec:
+  rules:
+    - host: minio.192.168.40.72.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: minio
+              servicePort: 9000
