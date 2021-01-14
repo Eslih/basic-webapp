@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api:
-    image: eslih/basic-webapp-api:v1.1.2
+    image: eslih/basic-webapp-api:v1.2.0
     # I automatically map secrets to environment vars
     # Think this is a clean(er) solution (than using the _FILE "best" practice)
     secrets:
@@ -20,7 +20,7 @@ services:
       - PORT=8080
 
   webapp:
-    image: eslih/basic-webapp-frontend:v1.1.2
+    image: eslih/basic-webapp-frontend:v1.2.0
     # I automatically map secrets to environment vars
     # Think this is a clean(er) solution (than using the _FILE "best" practice)
     secrets:
@@ -41,7 +41,7 @@ services:
   #    - statics:/app/webapp/static:ro
 
   nginx:
-    image: eslih/basic-webapp-nginx:v1.1.2
+    image: eslih/basic-webapp-nginx:v1.2.0
     build: ./nginx
     ports:
       - 80:80
