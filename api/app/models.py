@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import (Column, Integer, String,
+from sqlalchemy import (Column, Integer, String, Binary,
                         create_engine)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -32,14 +32,17 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     username = Column(String(80), unique=True, nullable=False)
-    password = Column(String(80), nullable=False)
+    password = Column(Binary, nullable=False)
+    email = Column(String(80), unique=True, nullable=False)
 
-    def __init__(self, username, password):
+    def __init__(self, username, email, password, id=None):
         self.username = username
+        self.email = email
         self.password = password
+        self.id = id
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'<User #{self.id}:{self.username}>'
 
     def delete_users():
         try:

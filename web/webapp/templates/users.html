@@ -6,14 +6,15 @@
             Look at this beautiful table. It shows all the users their credentials.
         </p>
         <p>
-            <a class="btn btn-danger btn-lg" href="/users/delete" role="button">Delete users</a>
+            <a class="btn btn-danger btn-lg" href="/user/delete" role="button">Delete users</a>
         </p>
         <table class="table table-hover">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Username</th>
-                <th scope="col">Password</th>
+                <th scope="col">Email</th>
+                <th scope="col">Password (truncated)</th>
             </tr>
             </thead>
             <tbody>
@@ -21,14 +22,15 @@
                 <tr>
                     <th scope="row">{{ user.id }}</th>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.password }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.password|truncate(40) }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
         <div class="alert alert-warning" role="alert">
-            {{ message }} <a href="/registration">Register</a>!
+            {{ message }} <a href="/user/register">Register</a>!
         </div>
     {% endif %}
 {% endblock %}

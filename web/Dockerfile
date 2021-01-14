@@ -4,7 +4,7 @@ WORKDIR '/app'
 
 RUN apk add --no-cache linux-headers g++ git
 
-COPY ./requirements.txt ./
+COPY webapp/requirements.txt ./
 
 RUN pip wheel --wheel-dir=/root/wheels -r requirements.txt
 
