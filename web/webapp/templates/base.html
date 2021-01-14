@@ -36,18 +36,18 @@
             {% block content %}{% endblock %}
             <p>
                 {% if current_user.is_authenticated %}
-                    <a href="/auth/logout" class="btn btn-danger">Logout</a>
+                    <a href="{{ url_for('auth_blueprint.logout') }}" class="btn btn-danger">Logout</a>
                 {% else %}
                     {% if request.path!="/auth/login" and request.path!="/user/register" %}
-                        <a href="/auth/login" class="btn btn-primary">Login</a>
-                        <a href="/user/register" class="btn btn-secondary">Register</a>
+                        <a href="{{ url_for('auth_blueprint.login') }}" class="btn btn-primary">Login</a>
+                        <a href="{{ url_for('user_blueprint.register') }}" class="btn btn-secondary">Register</a>
                     {% endif %}
                 {% endif %}
             </p>
             <p>
                 <span class="badge badge-info">Hostname: {{ hostname }} | Frontend Request time: {{ g.request_time() }}</span>
                 {% if current_user.is_authenticated %}
-                    <a href="/user" class="badge badge-light">Users overview</a>
+                    <a href="{{ url_for('user_blueprint.users') }}" class="badge badge-light">Users overview</a>
                 {% endif %}
             </p>
             <p>

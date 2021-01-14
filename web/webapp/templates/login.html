@@ -12,8 +12,8 @@
                 <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong> and
                 password <strong>{{ data.password }}</strong>!
             </div>
-            <a href="/auth/login" class="btn btn-warning">Try again!</a>
-            <a href="/user/register" class="btn btn-success">Register!</a>
+            <a href="{{ url_for('auth_blueprint.login') }}" class="btn btn-warning">Try again!</a>
+            <a href="{{ url_for('user_blueprint.register') }}" class="btn btn-success">Register!</a>
         {% endif %}
         {% if form.errors.items() %}
             <div class="alert alert-danger" role="alert">
