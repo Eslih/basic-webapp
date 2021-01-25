@@ -15,40 +15,44 @@ services:
     depends_on:
       - postgres
     environment:
-      - PG_PORT=5432
-      - PG_HOST=postgres
+      - POSTGRES_USER=student_user
+      - POSTGRES_PASSWORD=student_password
+      - POSTGRES_DATABASE=labo
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=postgres
       - PORT=8080
+#    entrypoint: [ "sh", "-c", "sleep 2073600" ]
 
-  webapp:
-    image: eslih/basic-webapp-frontend:v1.2.0
-    # I automatically map secrets to environment vars
-    # Think this is a clean(er) solution (than using the _FILE "best" practice)
-    secrets:
-      - flask_secret_key
-      - aws_access_key_id
-      - aws_secret_access_key
-    build: ./web
-    command: uwsgi --ini app.ini
-    expose:
-      - 5000
-    depends_on:
-      - api
-    environment:
-      - ENVIRONMENT=production
-      - FLASKS3_ENDPOINT_URL=http://minio.192.168.40.72.xip.io
-      - FLASKS3_BUCKET_DOMAIN=minio.192.168.40.72.xip.io
-  #    volumes:
-  #    - statics:/app/webapp/static:ro
-
-  nginx:
-    image: eslih/basic-webapp-nginx:v1.2.0
-    build: ./nginx
-    ports:
-      - 80:80
-    depends_on:
-      - webapp
-  #    volumes:
-  #    - statics:/app/static:ro
+  #  webapp:
+  #    image: eslih/basic-webapp-frontend:v1.2.0
+  #    # I automatically map secrets to environment vars
+  #    # Think this is a clean(er) solution (than using the _FILE "best" practice)
+  #    secrets:
+  #      - flask_secret_key
+  #      - aws_access_key_id
+  #      - aws_secret_access_key
+  #    build: ./web
+  #    command: uwsgi --ini app.ini
+  #    expose:
+  #      - 5000
+  #    depends_on:
+  #      - api
+  #    environment:
+  #      - ENVIRONMENT=production
+  #      - FLASKS3_ENDPOINT_URL=http://minio.192.168.40.72.xip.io
+  #      - FLASKS3_BUCKET_DOMAIN=minio.192.168.40.72.xip.io
+  #  #    volumes:
+  #  #    - statics:/app/webapp/static:ro
+  #
+  #  nginx:
+  #    image: eslih/basic-webapp-nginx:v1.2.0
+  #    build: ./nginx
+  #    ports:
+  #      - 80:80
+  #    depends_on:
+  #      - webapp
+  #  #    volumes:
+  #  #    - statics:/app/static:ro
 
   postgres:
     image: 'postgres:13.1-alpine'
