@@ -4,7 +4,7 @@ from pydantic import UUID4
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
 
-from .dependencies import get_db
+from .dependencies import get_db, get_current_user
 from .. import actions
 from ..schemas import User, UserCreate, HTTPError, UserUpdate
 
@@ -12,7 +12,8 @@ user_router = APIRouter()
 
 
 @user_router.get("/", response_model=List[User], tags=["users"])
-def list_users(db: Session = Depends(get_db), skip: int = 0, limit: int = 100) -> Any:
+def list_users(db: Session = Depends(get_db), current_user: User = Depends(get_current_user), skip: int = 0,
+               limit: int = 100) -> Any:
     users = actions.user.get_all(db=db, skip=skip, limit=limit)
     return users
 
@@ -64,7 +65,7 @@ def get_user(*, db: Session = Depends(get_db), id: UUID4) -> Any:
     responses={HTTP_404_NOT_FOUND: {"model": HTTPError}},
     tags=["users"],
 )
-def delete_user(*, db: Session = Depends(get_db), id: UUID4) -> Any:
+def delete_user(*, db: Session = Depends(get_db), current_user: User = Depends(get_current_user), id: UUID4) -> Any:
     user = actions.user.get(db=db, id=id)
     if not user:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="User not found")
