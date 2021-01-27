@@ -4,7 +4,7 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import UUID4, BaseModel, EmailStr
 from sqlalchemy.orm import Session
 
-from app.db import Base
+from ..db import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
@@ -62,3 +62,8 @@ class BaseActions(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.delete(obj)
         db.commit()
         return obj
+
+    def remove_al(self, db: Session) -> int:
+        deleted_rows = db.query(self.model).delete()
+        db.commit()
+        return deleted_rows
