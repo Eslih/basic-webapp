@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     POSTGRES_PORT: str
     API_VERSION_STR: str = "/api/v1"
     SECRET_KEY: str = "SG9wZWxpamsgZ2VicnVpa3QgZWVuIHN0dWRlbnQgZGl0IG9vaXQgbnV0dGlnLg=="
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 10
 
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
