@@ -2,7 +2,8 @@ from typing import List, Any
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import UUID4
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN
+from starlette.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, \
+    HTTP_401_UNAUTHORIZED
 
 from .dependencies import get_db, get_current_user
 from .. import actions
@@ -19,7 +20,7 @@ def list_users(db: Session = Depends(get_db), current_user: User = Depends(get_c
 
 
 @user_router.post(
-    "/users", response_model=User, status_code=HTTP_201_CREATED, tags=["users"]
+    "/create", response_model=User, status_code=HTTP_201_CREATED, tags=["users"]
 )
 def create_user(*, db: Session = Depends(get_db), user_in: UserCreate) -> Any:
     user = actions.user.get_by_username_or_email(db, email=user_in.email, username=user_in.username)
@@ -31,7 +32,7 @@ def create_user(*, db: Session = Depends(get_db), user_in: UserCreate) -> Any:
 
 
 @user_router.put(
-    "/users/{id}",
+    "/edit/{id}",
     response_model=User,
     responses={HTTP_404_NOT_FOUND: {"model": HTTPError}},
     tags=["users"],
@@ -47,7 +48,7 @@ def update_user(
 
 
 @user_router.get(
-    "/users/{id}",
+    "/{id}",
     response_model=User,
     responses={HTTP_404_NOT_FOUND: {"model": HTTPError}},
     tags=["users"],
@@ -60,7 +61,7 @@ def get_user(*, db: Session = Depends(get_db), id: UUID4) -> Any:
 
 
 @user_router.delete(
-    "/user/{id}",
+    "/delete/{id}",
     response_model=User,
     responses={HTTP_404_NOT_FOUND: {"model": HTTPError}},
     tags=["users"],
@@ -71,3 +72,13 @@ def delete_user(*, db: Session = Depends(get_db), current_user: User = Depends(g
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="User not found")
     user = actions.user.remove(db=db, id=id)
     return user
+
+
+@user_router.delete(
+    "/delete",
+    response_model=int,
+    responses={HTTP_401_UNAUTHORIZED: {"model": HTTPError}},
+    tags=["users"],
+)
+def delete_users(*, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)) -> Any:
+    return actions.user.remove_al(db=db)

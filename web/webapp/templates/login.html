@@ -9,17 +9,21 @@
 
         {% if data %}
             <div class="alert alert-danger" role="alert">
-                <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong> and
-                password <strong>{{ data.password }}</strong>!
+                <p>
+                    <strong>You must be retarded!</strong> No user with username <strong>{{ data.username }}</strong>
+                    and password <strong>{{ data.password }}</strong>!
+
+                    {{ data.error }}
+                </p>
             </div>
             <a href="{{ url_for('auth_blueprint.login') }}" class="btn btn-warning">Try again!</a>
             <a href="{{ url_for('user_blueprint.register') }}" class="btn btn-success">Register!</a>
         {% endif %}
         {% if form.errors.items() %}
             <div class="alert alert-danger" role="alert">
-            {% for field, errors in form.errors.items() %}
-                <p><strong>{{ form[field].label }}:</strong> {{ ', '.join(errors) }}</p>
-            {% endfor %}
+                {% for field, errors in form.errors.items() %}
+                    <p><strong>{{ form[field].label }}:</strong> {{ ', '.join(errors) }}</p>
+                {% endfor %}
             </div>
         {% endif %}
 
@@ -28,8 +32,8 @@
             {{ form.hidden_tag() }}
 
             <div class="form-group">
-                {{ form.username.label }}
-                {{ form.username(placeholder="Enter username", class="form-control") }}
+                {{ form.email.label }}
+                {{ form.email(placeholder="Enter email", class="form-control") }}
             </div>
             <div class="form-group">
                 {{ form.password.label }}

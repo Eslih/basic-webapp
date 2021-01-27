@@ -1,14 +1,16 @@
-from flask import request, render_template, redirect, url_for, abort
-from webapp.blueprints.auth import blueprint
-from webapp.blueprints.auth.forms import LoginForm
-from webapp.blueprints.auth.models import User
-from webapp.blueprints.util import is_safe_url
+from flask import request, render_template, redirect, url_for, abort, session
+from flask_jwt_extended import decode_token
+
+from ...blueprints.auth import blueprint
+from ...blueprints.auth.forms import LoginForm
+from ...blueprints.auth.models import User
+from ...blueprints.util import is_safe_url
 
 import requests
 
 from flask_login import (
     login_user,
-    logout_user, login_manager, current_user
+    logout_user, current_user
 )
 
 
@@ -25,12 +27,17 @@ def login():
             return render_template('login.html', form=form)
 
         try:
-            data = requests.post('http://api:8080/v1/login',
-                                 json={'username': form.username.data, 'password': form.password.data, 'email': ''})
+            # Should be data and not json (endpoint expects form body)
+            data = requests.post('http://api:8080/api/v1/auth/access-token',
+                                 data={'username': form.email.data, 'password': form.password.data})
 
             if data.status_code == 200:
+
                 user = User()
-                user.id = int(data.json()['id'])
+                decoded_token = decode_token(data.json()['access_token'])
+                user.id = decoded_token['sub']
+                session['token'] = data.json()['access_token']
+                session['token_exp'] = decoded_token['exp']
 
                 login_user(user)
 
@@ -41,7 +48,8 @@ def login():
                 return redirect(next or url_for('home_blueprint.home'))
             else:
                 return render_template('login.html',
-                                       data={'username': form.username.data, 'password': form.password.data},
+                                       data={'username': form.email.data, 'password': form.password.data,
+                                             'error': data.json()['detail']},
                                        api_headers=data.headers, form=form)
 
         except Exception as e:

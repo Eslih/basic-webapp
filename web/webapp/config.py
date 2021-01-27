@@ -23,3 +23,5 @@ class Config(object):
     FLASKS3_BUCKET_NAME = os.getenv('FLASKS3_BUCKET_NAME', 'statics')
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    JWT_SECRET_KEY = 'SG9wZWxpamsgZ2VicnVpa3QgZWVuIHN0dWRlbnQgZGl0IG9vaXQgbnV0dGlnLg=='
+    JWT_IDENTITY_CLAIM = 'sub'
