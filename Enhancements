@@ -1,3 +1,8 @@
 Redis for session caching (front-end)
 Pydantic for front-end
 Password complexity
+Testing
+Configure API url in config (front-end)
+Secure Flask-Login
+Password reset
+Edit user
