@@ -2,25 +2,24 @@ version: '3.8'
 
 services:
   api:
-    image: eslih/basic-webapp-api:v1.2.0
-    # I automatically map secrets to environment vars
-    # Think this is a clean(er) solution (than using the _FILE "best" practice)
-    secrets:
-      - pg_password
-      - pg_user
-      - pg_database
+    image: eslih/basic-webapp-api:v2.0.0
+    # Should fix secrets
     build: ./api
     ports:
       - 8080:8080
     depends_on:
       - postgres
     environment:
-      - PG_PORT=5432
-      - PG_HOST=postgres
+      - POSTGRES_USER=student_user
+      - POSTGRES_PASSWORD=student_password
+      - POSTGRES_DATABASE=labo
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=postgres
       - PORT=8080
+  #    entrypoint: [ "sh", "-c", "sleep 2073600" ]
 
   webapp:
-    image: eslih/basic-webapp-frontend:v1.2.0
+    image: eslih/basic-webapp-frontend:v2.0.0
     # I automatically map secrets to environment vars
     # Think this is a clean(er) solution (than using the _FILE "best" practice)
     secrets:
@@ -37,18 +36,18 @@ services:
       - ENVIRONMENT=production
       - FLASKS3_ENDPOINT_URL=http://minio.192.168.40.72.xip.io
       - FLASKS3_BUCKET_DOMAIN=minio.192.168.40.72.xip.io
-  #    volumes:
-  #    - statics:/app/webapp/static:ro
+    #    volumes:
+    #    - statics:/app/webapp/static:ro
 
   nginx:
-    image: eslih/basic-webapp-nginx:v1.2.0
+    image: eslih/basic-webapp-nginx:v2.0.0
     build: ./nginx
     ports:
       - 80:80
     depends_on:
       - webapp
-  #    volumes:
-  #    - statics:/app/static:ro
+    #    volumes:
+    #    - statics:/app/static:ro
 
   postgres:
     image: 'postgres:13.1-alpine'

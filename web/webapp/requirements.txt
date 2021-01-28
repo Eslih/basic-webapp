@@ -5,3 +5,4 @@ git+https://github.com/e-dard/flask-s3
 flask-login==0.5.0
 Flask-WTF==0.14.3
 email-validator==1.1.2
+Flask-JWT-Extended==3.25.0

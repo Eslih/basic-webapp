@@ -1,7 +1,7 @@
 from glob import glob
-
 import flask_s3
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_s3 import FlaskS3
 from importlib import import_module
 from flask_login import LoginManager
@@ -20,6 +20,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     login_manager.session_protection = "strong"
     aws_s3(app)
+    JWTManager(app)
 
 
 def aws_s3(app):
@@ -34,6 +35,7 @@ def aws_s3(app):
 def create_app():
     app = Flask(__name__)
     app.config.from_object('webapp.config.Config')
+
     register_blueprints(app)
     register_extensions(app)
 

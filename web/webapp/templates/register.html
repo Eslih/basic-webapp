@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if session['logged_in'] %}
-        <h1 class="jumbotron-heading">Nothing to do here...</h1>
-        <p class="lead text-muted">Seems like you're already logged in!</p>
+    {% if current_user.is_authenticated %}
+        <h1 class="display-4">Nothing to do here...</h1>
+        <p class="lead">Seems like you're already logged in!</p>
     {% else %}
-        <h1 class="jumbotron-heading">Register</h1>
-        <p class="lead text-muted">You won't regret, coolest app ever!</p>
+        <h1 class="display-4">Register</h1>
+        <p class="lead">You won't regret, coolest app ever!</p>
         {% if error or form.errors.items() %}
             <div class="alert alert-danger" role="alert">
                 {{ error }}
@@ -14,21 +14,18 @@
                 {% endfor %}
             </div>
         {% endif %}
-
         <form role="form" action="" method="POST">
-
             {{ form.hidden_tag() }}
-
-            <div class="form-group">
-                {{ form.username.label }}
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }}
                 {{ form.username(placeholder="Enter username", class="form-control") }}
             </div>
-            <div class="form-group">
-                {{ form.email.label }}
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
                 {{ form.email(placeholder="Enter email", class="form-control") }}
             </div>
-            <div class="form-group">
-                {{ form.password.label }}
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
                 {{ form.password(placeholder="Enter password", class="form-control", type="password") }}
             </div>
             <button type="submit" class="btn btn-success">Register!</button>

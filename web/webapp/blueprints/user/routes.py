@@ -1,9 +1,8 @@
 import requests
-from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
-from webapp.blueprints.user import blueprint
-from webapp.blueprints.user.forms import CreateAccountForm
-from webapp.blueprints.util import hash_pass
+from flask import render_template, request, redirect, url_for, session
+from flask_login import login_required, current_user, logout_user
+from ...blueprints.user import blueprint
+from ...blueprints.user.forms import CreateAccountForm
 
 
 # Users overview
@@ -11,7 +10,7 @@ from webapp.blueprints.util import hash_pass
 @login_required
 def users():
     try:
-        data = requests.get('http://api:8080/v1/users')
+        data = requests.get('http://api:8080/api/v1/users', headers={'Authorization': f"Bearer {session['token']}"})
         return render_template('users.html', users=data.json(), api_headers=data.headers)
     except Exception as e:
         return "Some very good exception handling!" + str(e)
@@ -29,12 +28,12 @@ def register():
             if not form.validate_on_submit():
                 return render_template('register.html', form=form)
 
-            data = requests.post('http://api:8080/v1/register',
-                                 json={'username': form.username.data, 'password': hash_pass(form.password.data),
+            data = requests.post('http://api:8080/api/v1/users/create',
+                                 json={'username': form.username.data, 'password': form.password.data,
                                        'email': form.email.data})
 
             if data.status_code == 400:
-                return render_template('register.html', error=data.json()['error'],
+                return render_template('register.html', error=data.json()['detail'],
                                        api_headers=data.headers, form=form)
 
             # HTTP Code 201 = "Created"
@@ -55,7 +54,9 @@ def register():
 @login_required
 def delete_users():
     try:
-        num_deleted = requests.delete('http://api:8080/v1/users/delete').json()['users_deleted']
+        num_deleted = requests.delete('http://api:8080/api/v1/users/delete',
+                                      headers={'Authorization': f"Bearer {session['token']}"}).json()
+        logout_user()
         return render_template('users.html', message='All users (' + str(num_deleted) + ') are deleted.')
     except Exception as e:
         return "Some very good exception handling!" + str(e)

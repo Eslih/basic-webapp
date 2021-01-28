@@ -2,66 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Coolest Docker Example Ever!</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/album/">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Not-so-basic webapp</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='github-ribbon.css') }}">
-</head>
+    <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!-- Custom styles for this template -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='github-ribbon.css') }}"> -->
+
+
+</head>
 <body>
 
-<header>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <a href="/" class="navbar-brand d-flex align-items-center">
-                <strong>Some Cool Docker / Kubernetes App</strong>
-            </a>
-            <a href="https://github.com/Eslih/basic-webapp" class="ribbon">Fork me on GitHub</a>
-        </div>
-    </div>
+<header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="/">Not-so-basic webapp</a>
+    <nav class="my-2 my-md-0 me-md-3">
+        <a class="p-2 text-dark" href="{{ url_for('user_blueprint.users') }}">Users</a>
+        <a class="p-2 text-dark" href="{{ url_for('prime_blueprint.primes') }}">Primes</a>
+        <a class="p-2 text-dark" href="{{ url_for('prime_blueprint.v2') }}">Primes V2</a>
+        <a class="p-2 text-dark" href="{{ url_for('cat_blueprint.cat') }}">Cat</a>
+        <a class="p-2 text-dark" href="{{ url_for('joke_blueprint.joke') }}">Joke</a>
+        {% if not current_user.is_authenticated %}
+            <a class="p-2 text-dark" href="{{ url_for('auth_blueprint.login') }}">Log in</a>
+        {% endif %}
+        <!-- <a href="https://github.com/Eslih/basic-webapp" class="ribbon">Fork me on GitHub</a> -->
+    </nav>
+    {% if current_user.is_authenticated %}
+        <a class="btn btn-outline-danger" href="{{ url_for('auth_blueprint.logout') }}">Log out</a>
+    {% else %}
+        <a class="btn btn-outline-primary" href="{{ url_for('user_blueprint.register') }}">Sign up</a>
+    {% endif %}
 </header>
 
-<main role="main">
-    <section class="jumbotron text-center">
-        <div class="container">
-            {% block content %}{% endblock %}
-            <p>
-                {% if current_user.is_authenticated %}
-                    <a href="/auth/logout" class="btn btn-danger">Logout</a>
-                {% else %}
-                    {% if request.path!="/auth/login" and request.path!="/user/register" %}
-                        <a href="/auth/login" class="btn btn-primary">Login</a>
-                        <a href="/user/register" class="btn btn-secondary">Register</a>
+<main class="container">
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        {% block content %}{% endblock %}
+    </div>
+
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <a href="https://github.com/Eslih/basic-webapp" class="btn btn-outline-secondary btn-sm">
+                    <img class="mb-2" src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub Mark"
+                         width="16px" height="16px">
+                    Fork / Star me on GitHub
+                </a>
+                <small class="d-block mb-3 text-muted"><a href="mailto:esli.heyvaert@howest.be" class="link-secondary">Esli
+                    Heyvaert</a> &copy
+                    2020 - {{ now.year }}</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Technology</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="https://www.docker.com/">Docker</a></li>
+                    <li><a class="link-secondary" href="https://docs.docker.com/compose/">Docker Compose</a></li>
+                    <li><a class="link-secondary" href="https://flask.palletsprojects.com/">Flask</a></li>
+                    <li><a class="link-secondary" href="https://fastapi.tiangolo.com/">FastAPI</a></li>
+                    <li><a class="link-secondary" href="https://www.nginx.com/">Nginx</a></li>
+                    <li><a class="link-secondary" href="https://www.postgresql.org/">PostgreSQL</a></li>
+                    <li><a class="link-secondary" href="https://getbootstrap.com/">Bootstrap</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="link-secondary" href="#" id="api-docs">API Docs</a></li>
+                    <li><a class="link-secondary" href="https://github.com/Eslih/basic-webapp">GitHub Source</a></li>
+                    <li><a class="link-secondary" href="https://hub.docker.com/u/eslih">Docker Hub</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Stats</h5>
+                <ul class="list-unstyled text-small" id="stats">
+                    <li>Hostname: {{ hostname }}</li>
+                    <li> Frontend Request time: {{ g.request_time() }}</li>
+                    {% if api_headers %}
+                        <li>API Hostname: {{ api_headers['x-api-hostname'] }}</li>
+                        <li>API Processing Time: {{ api_headers['x-process-time'] }}</li>
                     {% endif %}
-                {% endif %}
-            </p>
-            <p>
-                <span class="badge badge-info">Hostname: {{ hostname }} | Frontend Request time: {{ g.request_time() }}</span>
-                {% if current_user.is_authenticated %}
-                    <a href="/user" class="badge badge-light">Users overview</a>
-                {% endif %}
-            </p>
-            <p>
-                {% if api_headers %}
-                    <span class="badge badge-dark">
-                        API Hostname: {{ api_headers['x-api-hostname'] }} |
-                        API Processing Time: {{ api_headers['x-process-time'] }}
-                    </span>
-                {% endif %}
-            </p>
-            <p class="font-weight-light">Version 1.2.0
-            </p>
+                </ul>
+            </div>
         </div>
-    </section>
+    </footer>
 </main>
 </body>
+<script>
+    document.getElementById("api-docs").href = window.location.protocol + '//' + window.location.host + ':8080/docs'
+</script>
 </html>

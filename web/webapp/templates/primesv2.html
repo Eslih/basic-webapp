@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="display-4" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">Prime numbers!</h1>
+    <p class="lead">Oh dear! Here we go again... You know? This request is quite heavy for the API!</p>
+    <p>
+        Although this version looks quite similar to <a href="{{ url_for('prime_blueprint.primes') }}">primes v1</a>, it
+        works differently! V2 is using (vanilla) JavaScript to fetch the prime numbers directly from the API. This way
+        the front-end is rendered immediately!
+    </p>
+    <p class="muted">
+        Oh, by the way... . The JavaScript code still needs some <strong>&hearts;</strong>. Feel free to fork
+        <a href="https://github.com/Eslih/basic-webapp">this app</a> and
+        <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request">
+            create a pull request</a>!
+    </p>
+    <p>
+        Try it yourself! Example: <a href="{{ url_for('prime_blueprint.v2') }}?lower=100&upper=1000">/?lower=100&upper=1000</a>
+    </p>
+
+    <p>
+        {% for prime in primes %}
+            <span class="badge bg-light text-dark">{{ prime }}</span>
+        {% endfor %}
+    </p>
+    <div id="primes">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <script>
+        {# I know... this should be refactored somewhat :D #}
+        let getParams = function (url) {
+            let params = {};
+            let parser = document.createElement('a');
+            parser.href = url;
+            let query = parser.search.substring(1);
+            let vars = query.split('&');
+            for (let i = 0; i < vars.length; i++) {
+                let pair = vars[i].split('=');
+                params[pair[0]] = decodeURIComponent(pair[1]);
+            }
+            return params;
+        };
+        let params = getParams(window.location.href)
+        let lower = 0
+        let upper = 10000
+        if (params) {
+            if (params.lower) {
+                lower = params.lower
+            }
+            if (params.upper) {
+                upper = params.upper
+            }
+        }
+        fetch(window.location.protocol + '//' + window.location.host + ':8080/api/v1/primes/?lower=' + lower + '&upper=' + upper).then(function (response) {
+            // The API call was successful!
+            if (response.ok) {
+                document.querySelector('#stats').innerHTML += '' +
+                    '<li>API Hostname: ' + response.headers.get('x-api-hostname') + '</li>' +
+                    '<li>API Processing Time: ' + response.headers.get('x-process-time') + '</li>'
+                return response.json();
+            } else {
+                return Promise.reject(response);
+            }
+        }).then(function (data) {
+            // This is the JSON from our response
+            let elem = document.querySelector('#primes');
+
+            // Set HTML content
+            let i, primes = '';
+            for (i = 0; i < data.length; i++) {
+                primes += '<span class="badge bg-light text-dark">' + data[i] + '</span>';
+            }
+            elem.innerHTML = primes;
+        }).catch(function (err) {
+            // There was an error
+
+            document.querySelector('#primes').innerHTML = '' +
+                '<div class="alert alert-danger" role="alert">' +
+                '<strong>Woops!</strong> Something went wrong!' +
+                '</div>'
+        });
+    </script>
+{% endblock %}
