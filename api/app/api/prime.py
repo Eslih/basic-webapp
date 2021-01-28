@@ -11,7 +11,7 @@ prime_router = APIRouter()
 # Response model & responses are handy for docs
 @prime_router.get("/", response_model=List[int], responses={HTTP_400_BAD_REQUEST: {"model": HTTPError}},
                   tags=["primes"])
-@prime_router.get("{lower}/{upper}", response_model=List[int], responses={HTTP_400_BAD_REQUEST: {"model": HTTPError}},
+@prime_router.get("/{lower}/{upper}", response_model=List[int], responses={HTTP_400_BAD_REQUEST: {"model": HTTPError}},
                   tags=["primes"])
 def get_primes(lower: int = 0, upper: int = 10000) -> List[int]:
     if lower > 5000:
