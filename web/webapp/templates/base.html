@@ -18,21 +18,21 @@
     <!-- Custom styles for this template -->
     <!-- <link rel="stylesheet" href="{{ url_for('static', filename='github-ribbon.css') }}"> -->
 
-    <script>
-        const a = document.querySelector('#stats');
-        a.href = window.location.protocol + '//' + window.location.host + ':8080/docs'
-    </script>
+
 </head>
 <body>
 
 <header class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <p class="h5 my-0 me-md-auto fw-normal">Not-so-basic webapp</p>
+    <a class="h5 my-0 me-md-auto fw-normal text-decoration-none text-dark" href="/">Not-so-basic webapp</a>
     <nav class="my-2 my-md-0 me-md-3">
         <a class="p-2 text-dark" href="{{ url_for('user_blueprint.users') }}">Users</a>
         <a class="p-2 text-dark" href="{{ url_for('prime_blueprint.primes') }}">Primes</a>
         <a class="p-2 text-dark" href="{{ url_for('prime_blueprint.v2') }}">Primes V2</a>
         <a class="p-2 text-dark" href="{{ url_for('cat_blueprint.cat') }}">Cat</a>
         <a class="p-2 text-dark" href="{{ url_for('joke_blueprint.joke') }}">Joke</a>
+        {% if not current_user.is_authenticated %}
+            <a class="p-2 text-dark" href="{{ url_for('auth_blueprint.login') }}">Log in</a>
+        {% endif %}
         <!-- <a href="https://github.com/Eslih/basic-webapp" class="ribbon">Fork me on GitHub</a> -->
     </nav>
     {% if current_user.is_authenticated %}
@@ -95,4 +95,7 @@
     </footer>
 </main>
 </body>
+<script>
+    document.getElementById("api-docs").href = window.location.protocol + '//' + window.location.host + ':8080/docs'
+</script>
 </html>
