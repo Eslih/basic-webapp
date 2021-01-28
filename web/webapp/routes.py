@@ -1,5 +1,6 @@
 import time
 import socket
+from datetime import datetime
 
 import flask
 from flask import g, redirect, url_for, request
@@ -17,6 +18,10 @@ def before_request():
 @app.context_processor
 def inject_hostname():
     return dict(hostname=socket.gethostname())
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
 
 
 @login_manager.unauthorized_handler

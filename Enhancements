@@ -6,3 +6,5 @@ Configure API url in config (front-end)
 Secure Flask-Login
 Password reset
 Edit user
+Configure CORS more strict
+Refactor JS code (add to separate file, write functions, ...)

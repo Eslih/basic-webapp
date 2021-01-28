@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if session['logged_in'] %}
-        <h1 class="jumbotron-heading">Nothing to do here...</h1>
-        <p class="lead text-muted">Seems like you're already logged in!</p>
+    {% if current_user.is_authenticated %}
+        <h1 class="display-4">Nothing to do here...</h1>
+        <p class="lead">Seems like you're already logged in!</p>
     {% else %}
-        <h1 class="jumbotron-heading">Login</h1>
-        <p class="lead text-muted">This is a login form!</p>
+        <h1 class="display-4">Login</h1>
+        <p class="lead">Ready. Set. Awesomeness!</p>
 
         {% if data %}
             <div class="alert alert-danger" role="alert">
@@ -26,17 +26,14 @@
                 {% endfor %}
             </div>
         {% endif %}
-
         <form role="form" action="" method="POST">
-
             {{ form.hidden_tag() }}
-
-            <div class="form-group">
-                {{ form.email.label }}
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
                 {{ form.email(placeholder="Enter email", class="form-control") }}
             </div>
-            <div class="form-group">
-                {{ form.password.label }}
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
                 {{ form.password(placeholder="Enter password", class="form-control", type="password") }}
             </div>
             <button type="submit" class="btn btn-primary">Login!</button>
