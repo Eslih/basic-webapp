@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api:
-    image: eslih/basic-webapp-api:v1.2.0
+    image: eslih/basic-webapp-api:v2.0.0
     # Should fix secrets
     build: ./api
     ports:
@@ -19,7 +19,7 @@ services:
   #    entrypoint: [ "sh", "-c", "sleep 2073600" ]
 
   webapp:
-    image: eslih/basic-webapp-frontend:v1.2.0
+    image: eslih/basic-webapp-frontend:v2.0.0
     # I automatically map secrets to environment vars
     # Think this is a clean(er) solution (than using the _FILE "best" practice)
     secrets:
@@ -40,7 +40,7 @@ services:
     #    - statics:/app/webapp/static:ro
 
   nginx:
-    image: eslih/basic-webapp-nginx:v1.2.0
+    image: eslih/basic-webapp-nginx:v2.0.0
     build: ./nginx
     ports:
       - 80:80
