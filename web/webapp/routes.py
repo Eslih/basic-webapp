@@ -2,11 +2,10 @@ import time
 import socket
 from datetime import datetime
 
-import flask
 from flask import g, redirect, url_for, request
 from flask import current_app as app
 
-from webapp import login_manager
+from . import login_manager
 
 
 @app.before_request
@@ -18,6 +17,7 @@ def before_request():
 @app.context_processor
 def inject_hostname():
     return dict(hostname=socket.gethostname())
+
 
 @app.context_processor
 def inject_now():
