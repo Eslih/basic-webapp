@@ -1,4 +1,4 @@
-FROM python:3.9.1-alpine3.12 as build-image
+FROM python:3.9.1-alpine3.13 as build-image
 
 WORKDIR '/app'
 
@@ -10,7 +10,7 @@ RUN pip wheel --wheel-dir=/root/wheels -r requirements.txt
 
 
 
-FROM python:3.9.1-alpine3.12 as production-image
+FROM python:3.9.1-alpine3.13 as production-image
 
 WORKDIR '/app'
 
@@ -20,10 +20,10 @@ COPY --from=build-image /root/wheels /root/wheels
 
 COPY --from=build-image /app/requirements.txt ./
 
+RUN addgroup -S uwsgi && adduser -S uwsgi -G uwsgi
+
 RUN pip install --no-index --find-links=/root/wheels -r requirements.txt
 
 COPY ./ ./
-
-RUN addgroup -S uwsgi && adduser -S uwsgi -G uwsgi
 
 USER uwsgi
