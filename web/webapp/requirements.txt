@@ -1,4 +1,4 @@
-Flask==1.1.2
+Flask==2.3.2
 uWSGI==2.0.19.1
 requests==2.25.1
 git+https://github.com/e-dard/flask-s3
